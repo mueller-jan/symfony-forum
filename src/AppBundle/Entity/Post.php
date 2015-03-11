@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Post {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread")
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="posts")
      * @ORM\JoinColumn(name="id_thread", referencedColumnName="id")
      */
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      */
     protected $user;

@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Thread {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="threads")
      * @ORM\JoinColumn(name="id_category", referencedColumnName="id")
      */
     protected $category;
@@ -34,7 +34,7 @@ class Thread {
     protected $last_modified_date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="threads")
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      */
     protected $user;
