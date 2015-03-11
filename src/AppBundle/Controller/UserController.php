@@ -4,13 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
-use AppBundle\Form\Type\CreateThreadType;
+use AppBundle\Form\CreateThreadType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Date;
-use AppBundle\Form\Type\CreatePostType;
+use AppBundle\Form\CreatePostType;
 
 class UserController extends Controller
 {
@@ -104,8 +102,6 @@ class UserController extends Controller
             ->getManager();
         $category = $em->getRepository('AppBundle:Category')
             ->find($id);
-        //get all threads from current category
-        $threads = $category->getThreads();
         $threads = $this->getThreadsOrderedByLatestPost($id);
         if (!$category) {
             throw $this->createNotFoundException('No thread found for id '.$id);

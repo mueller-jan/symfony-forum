@@ -6,7 +6,7 @@
  * Time: 08:11
  */
 
-namespace AppBundle\Form\Type;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
