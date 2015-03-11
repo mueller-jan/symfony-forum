@@ -1,0 +1,36 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block title %}Thread{% endblock %}
+
+
+{% block body %}
+    <div id="category-display"> {{ thread.title }} </div>
+    <div class="table">
+        <div class="row">
+            <div class="post-cell">
+                <p>{{ thread.description }} <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
+            </div>
+        </div>
+        <p></p>
+    {% for post in posts %}
+        <div class="row">
+            <div class="post-cell">
+                {{ post.title }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="post-cell">
+                {{ post.content|nl2br }}
+                <br> {{ post.user.username }}, {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+            </div>
+        </div>
+        <p></p>
+
+{% endfor %}
+    </div>
+    <p></p>
+    {% include ':default:create-post.html.twig' %}
+{% endblock %}
+
+
+

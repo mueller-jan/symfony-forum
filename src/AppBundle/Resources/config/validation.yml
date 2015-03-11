@@ -1,0 +1,10 @@
+# AppBundle/Resources/config/validation.yml
+AppBundle\Entity\Task:
+    properties:
+        title:
+            - NotBlank: ~
+        post:
+            - NotBlank: ~
+        date:
+            - NotBlank: ~
+            - Type: \DateTime

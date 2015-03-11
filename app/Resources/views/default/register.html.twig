@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thread{% endblock %}
+
+{% block header %}Create Thread{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="register-table">
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.user.username) }}
+            </div>
+            <div class="cell">
+                {{ form(form.user.username) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.user.email) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.user.email) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.user.password.password) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.user.password.password) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.user.password.confirm) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.user.password.confirm) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_widget(form.terms) }}
+            </div>
+        </div>
+
+        {{ form_row(form._token) }}
+        <div id="register-button">
+         {{ form_widget(form.Register) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

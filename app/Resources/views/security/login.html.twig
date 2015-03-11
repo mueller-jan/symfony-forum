@@ -1,0 +1,30 @@
+{# app/Resources/views/security/login.html.twig #}
+{# ... you will probably extends your base template, like base.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+    <div class="contact_form">
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData) }}</div>
+        {% endif %}
+        <form action="{{ path('login_check') }}" method="post">
+            <input type="hidden" name="{{ path('show_categories') }}" value="account" />
+            <ul>
+                <li>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                </li>
+                <li>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="_password" />
+                </li>
+            </ul>
+            <p></p>
+            <button id="login-button"  type="submit">login</button>
+        </form>
+    </div>
+    <form action="{{ path('account_register') }}">
+        <button id="register-button"  type="submit">register</button>
+    </form>
+
+{% endblock %}

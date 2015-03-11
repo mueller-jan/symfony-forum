@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{# this view adds a navigation bar that is visible when the user is logged in #}
+
+{% block navigation %}
+    <div id="navigation">
+        Welcome {{ app.security.getToken().getUser().username }}!
+        <form action="{{  path('logout') }}">
+             <button type="submit" class="navButton">Logout</button>
+         </form>
+         <form action="{{ path('show_categories') }}">
+             <button type="submit"  class="navButton" >Categories</button>
+         </form>
+         {% if app.session.get('isInThread') %}
+             <form action="{{ path('show_category', {'id':app.session.get('category_id')}) }}">
+                 <button type="submit" class="navButton">Threads</button>
+             </form>
+         {% endif %}
+
+        <form  action="{{ path('show_categories') }}">
+            <button id="admin-button" type="submit">Admin Panel</button>
+        </form>
+
+         <p class="clear"></p>
+    </div>
+ {% endblock %}
+
+{% block body %}
+
+{% endblock %}

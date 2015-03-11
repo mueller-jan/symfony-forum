@@ -1,0 +1,46 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block title %}Thread Overview{% endblock %}
+
+
+{% block body %}
+    <form action="{{  path('create_thread') }}">
+        <button type="submit" id="create-thread-button">Create Thread</button>
+    </form>
+
+    <p class="clear"></p>
+
+    <!--<i class="fa fa-camera-retro"></i> fa-camera-retro-->
+    <div id="category-display"> Category: {{ category.name }} </div>
+    <div class="table">
+    <div class="heading">
+        <div class="heading-cell">
+           Title
+        </div>
+        <div class="heading-cell">
+            Replies
+            <br>Views
+        </div>
+        <div class="heading-cell">
+            Latest Activity
+        </div>
+    </div>
+    {% for thread in threads %}
+        <div class="row">
+            <div class="cell">
+                <div class="iconCell">
+                    <i class="fa fa-comments threadIcon"></i>
+                </div>
+                <a href="{{  path('show_thread', {'id':thread.id}) }}">{{thread.title }}</a>
+                <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia") }}</br>
+            </div>
+            <div class="cell">
+                {{ thread.posts|length }}
+                <br>{{ thread.views }}
+            </div>
+            <div class="cell">
+                {{ thread.lastModifiedDate|date("F jS \\a\\t g:ia")}}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

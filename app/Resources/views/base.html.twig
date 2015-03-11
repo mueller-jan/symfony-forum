@@ -1,0 +1,28 @@
+{# app/Resources/views/basis.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>{% block title %}<h1>Symfony Forum</h1>{% endblock %}</title>
+
+    <header>
+        <a href="{{ path('show_categories') }}"><img src="{{ asset('bundles/app/images/logo.png') }}"></a>
+        {% block header %}{% endblock %}
+    </header>
+
+    {% block navigation %}{% endblock %}
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}" rel="stylesheet"
+              type="text/css"/>
+        <link href="{{ asset('bundles/app/css/style.css') }}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+
+<body>
+<div id="content">
+    {% block body %}{% endblock %}
+</div>
+</body>
+
+</html>

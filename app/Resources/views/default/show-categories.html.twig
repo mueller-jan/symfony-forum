@@ -1,0 +1,30 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block title %}Category Overview{% endblock %}
+
+{% block body %}
+    <!--<i class="fa fa-camera-retro"></i> fa-camera-retro-->
+
+    <div class="table">
+    <div class="heading">
+        <div class="heading-cell">
+            <p>Category</p>
+        </div>
+        <div class="heading-cell">
+            <p>Description</p>
+        </div>
+
+    </div>
+    {% for category in categories %}
+        <div class="row">
+            <div class="cell">
+                <i class="fa fa-comments threadIcon"></i>
+                <a href="{{  path('show_category', {'id':category.id}) }}">{{category.name }}</a>
+            </div>
+
+            <div class="cell">
+                {{ category.description }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
