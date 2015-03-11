@@ -114,7 +114,6 @@ class UserController extends Controller
         $repository = $this->getDoctrine()
             ->getRepository('AppBundle:Thread');
 
-        //'t.category' -> name of the entity property, not table property
         $query = $repository->createQueryBuilder('t')
             ->where("t.category = :id")
             ->setParameter('id', $category_id)
