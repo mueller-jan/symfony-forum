@@ -1,0 +1,245 @@
+/* === Remove input autofocus webkit === */
+*:focus {outline: none;}
+
+/* === Form Typography === */
+body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;}
+.contact_form h2, .contact_form label {font-family:Georgia, Times, "Times New Roman", serif;}
+.form_hint, .required_notification {font-size: 11px;}
+
+html {
+   background-color:  #d1d2c8;
+}
+
+/* === List Styles === */
+ul {
+    width:750px;
+    list-style-type:none;
+    list-style-position:outside;
+    margin:0px;
+    padding:0px;
+}
+li{
+    padding:12px;
+    position:relative;
+}
+
+
+/* === Form Header === */
+.contact_form h2 {
+    margin:0;
+    display: inline;
+}
+.required_notification {
+    color:#d45252;
+    margin:5px 0 0 0;
+    display:inline;
+    float:right;
+}
+
+/* === Form Elements === */
+.contact_form label {
+    width:150px;
+    margin-top: 3px;
+    display:inline-block;
+    float:left;
+    padding:3px;
+}
+.contact_form input {
+    border-style: none;
+    height:20px;
+    width:220px;
+    padding:5px 8px;
+}
+.contact_form textarea {padding:8px; width:300px;}
+
+
+/* form element visual styles */
+.contact_form input, .contact_form textarea {
+    padding-right:30px;
+    -moz-transition: padding .25s;
+    -webkit-transition: padding .25s;
+    -o-transition: padding .25s;
+    transition: padding .25s;
+}
+.contact_form input:focus, .contact_form textarea:focus {
+    background: #fff;
+    box-shadow: 0 0 3px #aaa;
+    padding-right:70px;
+}
+
+/* === Form hints === */
+.form_hint {
+    background: #d45252;
+    color: white;
+    margin-left:8px;
+    padding: 1px 6px;
+    z-index: 999; /* hints stay above all other elements */
+    position: absolute; /* allows proper formatting if hint is two lines */
+    display: none;
+}
+.form_hint::before {
+    content: "\25C0";
+    color:#d45252;
+    position: absolute;
+    top:1px;
+    left:-6px;
+}
+.contact_form input:focus + .form_hint {display: inline;}
+.contact_form input:required:valid + .form_hint {background: #28921f;}
+.contact_form input:required:valid + .form_hint::before {color:#28921f;}
+
+
+
+header {
+    background-color: #1b1b1b;
+}
+
+input[type=submit], button{
+    background-color: #333333;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    border-style: none;
+   /* text-shadow: 0 -1px 0 #396715; */
+}
+
+#category-display {
+    font-size: 16px;
+    color:black;
+    text-align: left;
+}
+
+input[type=submit]:active, button:hover {
+    opacity:.35;
+    cursor: pointer;
+}
+input[type=submit]:active, button:active {
+    background-color: black;
+}
+
+.navButton, #login-button, #register-button {
+    float:left;
+    margin: 20px;
+}
+
+#create-thread-button, #admin-button
+{
+    float:right;
+    background-color: #a40009;
+}
+
+
+
+p.clear {
+    clear: both;
+}
+/* === Content === */
+#content {
+    background-color: #e6e7db;
+    color: #a40009;
+    font-weight: bold;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    /* text-shadow: 0 -1px 0 #396715; */
+}
+
+/* === Navigation === */
+#navigation
+{
+    padding: 10px;
+    color:white;
+    background-color: #222222;
+}
+
+/* === Tables === */
+.table
+{
+    width: 100%;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0px 4px;
+
+}
+.title
+{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+
+}
+.heading
+{
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+    background-color: #222222;
+    color: white;
+}
+.heading-cell {
+    display: table-cell;
+    padding: 5px;
+    padding-left: 20px;
+    text-align: left;
+    vertical-align: middle;
+}
+.row
+{
+    display: table-row;
+}
+.cell
+{
+    display: table-cell;
+    padding: 20px;
+    text-align: left;
+    vertical-align: middle;
+    background-color: #eeebdf;
+}
+
+.post-cell
+{
+    display: table-cell;
+    padding: 20px;
+    text-align: left;
+    color:#000000;
+    vertical-align: middle;
+    background-color: #eeebdf;
+}
+
+.iconCell
+{
+    float:left;
+    padding: 5px;
+}
+/* === Link styles === */
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
+
+
+/* === Font Awesome Icons === */
+.arrow {
+    color:lightgray;
+    float:left;
+    font-size: 20px;
+    padding-top:20px
+}
+
+.threadIcon {
+    font-size: 30px;
+}
+
