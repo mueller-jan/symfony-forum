@@ -10,8 +10,8 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Form\Type\RegistrationType;
-use AppBundle\Form\Model\Registration;
+use AppBundle\Form\RegistrationType;
+use AppBundle\Model\Registration;
 use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends Controller
@@ -28,7 +28,7 @@ class AccountController extends Controller
         ));
 
         return $this->render(
-            'Default/register.html.twig',
+            'default/register.html.twig',
             array('form' => $form->createView())
         );
     }
@@ -54,7 +54,7 @@ class AccountController extends Controller
         }
 
         return $this->render(
-            'Default/register.html.twig',
+            'default/register.html.twig',
             array('form' => $form->createView())
         );
     }

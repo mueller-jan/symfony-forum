@@ -5,7 +5,7 @@
  * Date: 07.03.2015
  * Time: 08:18
  */
-namespace AppBundle\Form\Model;
+namespace AppBundle\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\User;

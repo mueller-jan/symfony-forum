@@ -43,7 +43,7 @@ class UserController extends Controller
             $em->persist($post);
             $em->flush();
         }
-        return $this->render('Default/create-post.html.twig', array('form' => $form->createView()));
+        return $this->render('default/create-post.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
             $em->flush();
             return $this->redirect($this->generateUrl('show_category', array('id' => $category_id)));
         }
-        return $this->render('Default/create-thread.html.twig', array('form' => $form->createView()));
+        return $this->render('default/create-thread.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends Controller
         $categories = $this->getDoctrine()
             ->getRepository('AppBundle:Category')
             ->findAll();
-        return $this->render('Default/show-categories.html.twig', array('categories' => $categories));
+        return $this->render('default/show-categories.html.twig', array('categories' => $categories));
     }
 
 
@@ -106,7 +106,7 @@ class UserController extends Controller
         if (!$category) {
             throw $this->createNotFoundException('No thread found for id '.$id);
         }
-        return $this->render('Default/show-threads.html.twig', array('threads' => $threads, 'category' => $category));
+        return $this->render('default/show-threads.html.twig', array('threads' => $threads, 'category' => $category));
     }
 
     private function getThreadsOrderedByLatestPost($category_id)
@@ -148,7 +148,7 @@ class UserController extends Controller
         if (!$thread) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
-        return $this->render('Default/show-thread.html.twig', array('posts' => $posts, 'thread' => $thread, 'form' => $postSubmitForm->createView()));
+        return $this->render('default/show-thread.html.twig', array('posts' => $posts, 'thread' => $thread, 'form' => $postSubmitForm->createView()));
     }
 
     private function createPostSubmitForm(Request $request, $thread) {
