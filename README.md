@@ -11,3 +11,4 @@ Possible so far:
 * creating threads
 * creating posts in threads
 
+Demo-Link: http://jan-mueller.org/web/app_dev.php/secured/show-categories
