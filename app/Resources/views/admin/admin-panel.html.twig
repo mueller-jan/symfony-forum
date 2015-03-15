@@ -2,18 +2,17 @@
 
 {% block title %}Thread{% endblock %}
 
-{% block header %}Create Thread{% endblock %}
 {% block body %}
     {{ form_start(form) }}
         {{ form_errors(form) }}
-
+        <div id="category-display">Create Categories</div>
         <div class="table">
             <div class="row">
                 <div class="cell">
-                    {{ form_label(form.title) }}
+                    {{ form_label(form.name) }}
                 </div>
                 <div class="cell">
-                    {{ form(form.title) }}
+                    {{ form(form.name) }}
                 </div>
             </div>
             <div class="row">

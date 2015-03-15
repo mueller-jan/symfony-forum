@@ -6,7 +6,7 @@
  * Time: 08:24
  */
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 
 use Symfony\Component\Form\AbstractType;
@@ -22,6 +22,7 @@ class RegistrationType extends AbstractType
             'checkbox',
             array('property_path' => 'termsAccepted')
         );
+
         $builder->add('Register', 'submit');
     }
 

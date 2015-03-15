@@ -19,7 +19,8 @@ security:
                 invalidate_session: true
                 path:   /logout
                 target: /secured/show-categories
-
     access_control:
-        # require ROLE_ADMIN for /admin*
+        # require ROLE_ADMIN for /secured/admin*
+        - { path: ^/secured/admin/*, roles: ROLE_ADMIN }
         - { path: ^/secured/*, roles: ROLE_USER }
+

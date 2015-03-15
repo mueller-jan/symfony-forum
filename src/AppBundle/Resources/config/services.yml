@@ -1,0 +1,5 @@
+services:
+  goal.form.type:
+    class: AppBundle\Form\Type\CreateThreadType
+    tags:
+      - { name: form.type, alias: thread }

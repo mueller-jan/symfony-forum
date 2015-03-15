@@ -4,6 +4,7 @@
 {% block navigation %}
     <div id="navigation">
         Welcome {{ app.security.getToken().getUser().username }}!
+        ({{ app.security.getToken().getUser().getRoles()|first }})
         <form action="{{  path('logout') }}">
              <button type="submit" class="navButton">Logout</button>
          </form>
@@ -16,10 +17,11 @@
              </form>
          {% endif %}
 
-        <form  action="{{ path('show_categories') }}">
-            <button id="admin-button" type="submit">Admin Panel</button>
-        </form>
-
+        {% if is_granted('ROLE_ADMIN') %}
+            <form  action="{{ path('admin_panel') }}">
+                <button id="admin-button" type="submit">Admin Panel</button>
+            </form>
+        {% endif %}
          <p class="clear"></p>
     </div>
  {% endblock %}

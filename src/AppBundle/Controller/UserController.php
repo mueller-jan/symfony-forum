@@ -2,15 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
-use AppBundle\Form\CreateThreadType;
+use AppBundle\Form\Type\CreateThreadType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\CreatePostType;
+use AppBundle\Form\Type\CreatePostType;
 
-class UserController extends Controller
+
+class UserController extends BaseController
 {
     /**
      * @Route("/index", name="index")
@@ -21,60 +24,24 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/secured/create-post", name="create_post")
+     * @Route("/secured/{id}/create-new-thread", name="create_new_thread", defaults={"category" = null})
+     * @ParamConverter("category", class="AppBundle:Category")
      */
-    public function createPostAction(Request $request)
-    {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $post = new Post();
-        $post->setTitle("The title".$user->getUsername());
-        $post->setContent("The content");
-        $post->setDate(new \DateTime("now"));
-        $form = $this->createForm(new CreatePostType(), $post);
-        $form->handleRequest($request);
 
-        $thread_id = $request->getSession()->get('thread_id');
-        $thread = $this->getDoctrine()->getRepository('AppBundle:Thread')->find($thread_id);
-        $post->setThread($thread);
-        $thread->setLastModifiedDate(new \DateTime("now"));
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
-        }
-        return $this->render('default/create-post.html.twig', array('form' => $form->createView()));
-    }
-
-    /**
-     * @Route("/secured/create-thread", name="create_thread")
-     */
-    public function createThreadAction(Request $request)
+    public function createThreadAction(Request $request, Category $category)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $thread = new Thread();
-        $thread->setTitle("The title");
-        $thread->setDescription("The content");
         $thread->setCreationDate(new \DateTime("now"));
         $thread->setLastModifiedDate(new \DateTime("now"));
         $thread->setViews(0);
         $thread->setUser($user);
+        $thread -> setCategory($category);
 
-        $form = $this->createForm(new CreateThreadType(), $thread);
-
-        $form->handleRequest($request);
-
-        $category_id = $request->getSession()->get('category_id');
-        $category = $this->getDoctrine()->getRepository('AppBundle:Category')->find($category_id);
-        $thread->setCategory($category);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($thread);
-            $em->flush();
-            return $this->redirect($this->generateUrl('show_category', array('id' => $category_id)));
-        }
-        return $this->render('default/create-thread.html.twig', array('form' => $form->createView()));
+        $actionURL = $this->generateUrl('create_new_thread', ['id'=>$category->getId()]);
+        $callback  = array($this, 'showCategoryAction');
+        $callbackArguments = array($request, $category->getId());
+        return $this->renderForm($request, $thread, 'new', $callback, $callbackArguments, ['action' => $actionURL]);
     }
 
     /**
@@ -93,7 +60,7 @@ class UserController extends Controller
     /**
      * @Route("/secured/show-category/{id}", name="show_category")
      */
-    public function showCategoryWithId(Request $request, $id)
+    public function showCategoryAction(Request $request, $id)
     {
         $request->getSession()->set('isInThread', false);
         //store current category that the user is browsing in session variable
@@ -140,9 +107,6 @@ class UserController extends Controller
         $em->flush();
         //get all posts from current thread
         $posts = $thread->getPosts();
-        //store current thread that the user is browsing in session variable
-        $request->getSession()->set('thread_id', $id);
-
         $postSubmitForm = $this->createPostSubmitForm($request, $thread);
 
         if (!$thread) {

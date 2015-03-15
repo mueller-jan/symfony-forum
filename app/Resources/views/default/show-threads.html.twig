@@ -4,13 +4,13 @@
 
 
 {% block body %}
-    <form action="{{  path('create_thread') }}">
+    <form action="{{  path('create_new_thread', {'id': category.id}) }}">
         <button type="submit" id="create-thread-button">Create Thread</button>
     </form>
 
+
     <p class="clear"></p>
 
-    <!--<i class="fa fa-camera-retro"></i> fa-camera-retro-->
     <div id="category-display"> Category: {{ category.name }} </div>
     <div class="table">
     <div class="heading">

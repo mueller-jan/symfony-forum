@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  * @UniqueEntity(fields="email", message="Email already taken")
  */
 class User implements UserInterface, \Serializable
@@ -26,6 +27,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -88,6 +90,12 @@ class User implements UserInterface, \Serializable
      */
     protected $password;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    protected $roles;
+
     public function getId()
     {
         return $this->id;
@@ -140,13 +148,13 @@ class User implements UserInterface, \Serializable
         return $this->password;
     }
 
-    /**
-     * @inheritDoc
-     */
+
+
     public function getRoles()
     {
         return array('ROLE_USER');
     }
+
 
     /**
      * @inheritDoc
@@ -210,10 +218,43 @@ class User implements UserInterface, \Serializable
     /**
      * Get threads
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getThreads()
     {
         return $this->threads;
     }
+
+
+
+
+    /**
+     * Add roles
+     *
+     * @param \AppBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\AppBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \AppBundle\Entity\Role $roles
+     */
+    public function removeRole(\AppBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
 }
