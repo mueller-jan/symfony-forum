@@ -7,6 +7,7 @@ It is based on the Symfony Standard Edition.
 * Form-Login
 * creating threads
 * creating posts in threads
+* edit posts
 * different roles
     * the user-role is by default 'ROLE_USER'
     * to create a user with the user-role 'ROLE_ADMIN' register with the username 'admin'
