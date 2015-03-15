@@ -10,7 +10,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Model\Registration;
 use Symfony\Component\HttpFoundation\Request;
 
