@@ -10,7 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Category;
-use AppBundle\Form\CreateCategoryType;
+use AppBundle\Form\Type\CreateCategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

@@ -11,7 +11,10 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\Type\RegistrationType;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Role;
 use AppBundle\Model\Registration;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends Controller
@@ -38,6 +41,8 @@ class AccountController extends Controller
      */
     public function createAction(Request $request)
     {
+
+        $this->createRolesIfNotExist();
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(new RegistrationType(), new Registration());
@@ -46,8 +51,23 @@ class AccountController extends Controller
 
         if ($form->isValid()) {
             $registration = $form->getData();
+            $user = $registration->getUser();
+            /**
+             * @todo implement proper way to assign roles
+             */
+            //assign admin role, if username equals admin (for testing purposes)
+            if ($user->getUsername() == 'admin') {
+                $role = $em->getRepository('AppBundle:Role')
+                    ->find(2);
 
-            $em->persist($registration->getUser());
+            } else {
+                $role = $em->getRepository('AppBundle:Role')
+                    ->find(1);
+            }
+            $role->addUser($user);
+            $user->addRole($role);
+            $em->persist($role);
+            $em->persist($user);
             $em->flush();
 
             return $this->redirect($this->generateUrl('show_categories'));
@@ -57,5 +77,25 @@ class AccountController extends Controller
             'default/register.html.twig',
             array('form' => $form->createView())
         );
+    }
+
+    private function createRolesIfNotExist() {
+        $em = $this->getDoctrine()->getManager();
+        $role = $em->getRepository('AppBundle:Role')
+            ->find(1);
+        if (!$role) {
+
+            $role1 = new Role();
+            $role1->setName('ROLE_USER');
+            $role1->setRole('ROLE_USER');
+            $role2 = new Role();
+            $role2->setName('ROLE_ADMIN');
+            $role2->setRole('ROLE_ADMIN');
+            $em->persist($role1);
+            $em->persist($role2);
+            $em->flush();
+        }
+
+
     }
 }

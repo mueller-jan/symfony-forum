@@ -9,6 +9,7 @@ namespace AppBundle\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Role;
 
 class Registration {
     /**
@@ -16,6 +17,12 @@ class Registration {
      * @Assert\Valid()
      */
     protected $user;
+
+    /**
+     * @Assert\Type(type="AppBundle\Entity\Role")
+     * @Assert\Valid()
+     */
+    protected $role;
 
     /**
      * @Assert\NotBlank()
@@ -31,6 +38,15 @@ class Registration {
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function setRole(Role $role) {
+        $this->role = $role;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 
     public function getTermsAccepted()

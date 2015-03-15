@@ -4,7 +4,7 @@
 {% block navigation %}
     <div id="navigation">
         Welcome {{ app.security.getToken().getUser().username }}!
-        ({{ app.security.getToken().getUser().getRoles()|first }})
+        ({{ app.security.getToken().getUser().getRoles()|first.getName() }})
         <form action="{{  path('logout') }}">
              <button type="submit" class="navButton">Logout</button>
          </form>
