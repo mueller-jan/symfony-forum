@@ -5,12 +5,15 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
-use AppBundle\Form\Type\CreateThreadType;
+use AppBundle\Form\Type\ThreadFormType;
+use AppBundle\Form\Type\PostFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\Type\CreatePostType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
+
 
 
 class UserController extends BaseController
@@ -90,11 +93,10 @@ class UserController extends BaseController
         return $query->getResult();
     }
 
-
     /**
      * @Route("/secured/show-thread/{id}", name="show_thread")
      */
-    public function showThreadWithId(Request $request, $id)
+    public function showThreadAction(Request $request, $id)
     {
         $request->getSession()->set('isInThread', true);
         $em = $this->getDoctrine()
@@ -116,10 +118,10 @@ class UserController extends BaseController
     }
 
     private function createPostSubmitForm(Request $request, $thread) {
-        //create an add-post-form containing a dummy post
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $post = $this->createDummyPost();
-        $form = $this->createForm(new CreatePostType(), $post);
+        $post = new Post();
+        $post->setDate(new \DateTime("now"));
+        $form = $this->createForm(new PostFormType(), $post);
         $post->setThread($thread);
         $thread->setLastModifiedDate(new \DateTime("now"));
         $post->setUser($user);
@@ -134,12 +136,28 @@ class UserController extends BaseController
         return $form;
     }
 
-    private function createDummyPost()
+    /**
+     * @Route("/secured/edit-post/{id}", name="edit_post")
+     * @ParamConverter("post", class="AppBundle:Post")
+     */
+    public function editPostAction(Request $request, Post $post)
     {
-        $post = new Post();
-        $post->setTitle("");
-        $post->setContent("");
-        $post->setDate(new \DateTime("now"));
-        return $post;
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if ($user == $post->getUser())
+        {
+            $form = $this->createForm(new PostFormType(), $post);
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $post->setContent(nl2br($post->getContent().'-----edited: '.(new \DateTime("now"))->format('Y-m-d H:i:s')));
+                $em->persist($post);
+                $em->flush();
+                return $this->redirect($this->generateUrl('show_thread', array('id' => $post->getThread()->getId())));
+            }
+            return $this->render('default/post-edit.html.twig', array('form' => $form->createView()));
+        } else {
+            return new Response('Missing Permission', Response:: HTTP_FORBIDDEN);
+        }
     }
+
 }

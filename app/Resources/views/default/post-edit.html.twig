@@ -1,0 +1,28 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="table">
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.title) }}
+            </div>
+            <div class="cell">
+                {{ form(form.title) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.content) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.content) }}
+            </div>
+        </div>
+        {{ form_row(form._token) }}
+        {{ form_widget(form.save) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+

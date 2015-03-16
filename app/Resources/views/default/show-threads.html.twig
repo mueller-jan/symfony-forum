@@ -31,7 +31,7 @@
                 <div class="iconCell">
                     <i class="fa fa-comments threadIcon"></i>
                 </div>
-                <a href="{{  path('show_thread', {'id':thread.id}) }}">{{thread.title }}</a>
+                <a href="{{  path('show_thread', {'id':thread.id}) }}">{{ thread.title }}</a>
                 <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia") }}</br>
             </div>
             <div class="cell">

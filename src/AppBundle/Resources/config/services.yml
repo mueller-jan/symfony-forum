@@ -1,5 +1,10 @@
 services:
-  goal.form.type:
-    class: AppBundle\Form\Type\CreateThreadType
+  thread.form.type:
+    class: AppBundle\Form\Type\ThreadFormType
     tags:
       - { name: form.type, alias: thread }
+
+  post.form.type:
+    class: AppBundle\Form\Type\PostFormType
+    tags:
+      - { name: form.type, alias: post }

@@ -15,13 +15,23 @@
     {% for post in posts %}
         <div class="row">
             <div class="post-cell">
-                {{ post.title }}
+                {{ post.title }} {{ post.id }}
             </div>
         </div>
         <div class="row">
             <div class="post-cell">
                 {{ post.content|nl2br }}
                 <br> {{ post.user.username }}, {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+                <div class="iconCell">
+                    {% if app.security.getToken().getUser() == post.user %}
+                        <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o"></i></a>
+                    {% endif %}
+                </div>
+                <div class="iconCell">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('delete_post', {'id':post.id}) }}"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <p></p>

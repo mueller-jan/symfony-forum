@@ -1,24 +1,25 @@
 <?php
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\Thread;
+use AppBundle\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CreateThreadType extends AbstractType {
+class PostFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('title', 'text')
-            ->add('description', 'textarea')
-            //->add('date', 'hidden')
-            ->add('save', 'submit', array('label' => 'Create Thread'))
+            ->add('content', 'textarea', array(
+                'attr' => array('cols' => '80', 'rows' => '10'),))
+            //->add('date', 'date')
+            ->add('save', 'submit', array('label' => 'Post Reply'))
             ->getForm();
     }
 
     public function getName()
     {
-        return 'thread';
+        return 'post';
     }
 
     /**
@@ -27,7 +28,7 @@ class CreateThreadType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class'         => Thread::class,
+            'data_class'         => Post::class,
             'action'        => '',
         ]);
     }
