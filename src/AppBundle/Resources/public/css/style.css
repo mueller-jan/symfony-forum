@@ -2,7 +2,7 @@
 *:focus {outline: none;}
 
 /* === Form Typography === */
-body {font: 14px/21px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;}
+body {font: 14px/21px "Verdana", "Lucida Grande", "Lucida Sans Unicode", sans-serif;}
 .contact_form h2, .contact_form label {font-family:Georgia, Times, "Times New Roman", serif;}
 .form_hint, .required_notification {font-size: 11px;}
 
@@ -110,6 +110,7 @@ input[type=submit], button{
 #category-display {
     font-size: 16px;
     color:black;
+    font-weight: bold;
     text-align: left;
 }
 
@@ -141,9 +142,9 @@ p.clear {
 #content {
     background-color: #e6e7db;
     color: #a40009;
-    font-weight: bold;
     padding: 10px 10px 10px 10px;
     text-align: center;
+    font-weight: normal;
     /* text-shadow: 0 -1px 0 #396715; */
 }
 
@@ -218,11 +219,13 @@ p.clear {
 a:link {
     text-decoration: none;
     color:#a40009;
+    font-weight: bold;
 }
 
 a:visited {
     text-decoration: none;
     color:#a40009;
+    font-weight: normal;
 }
 
 a:hover {
@@ -233,6 +236,9 @@ a:active {
     text-decoration: underline;
 }
 
+.light {
+    font-weight: lighter;
+}
 
 /* === Font Awesome Icons === */
 .arrow {
@@ -248,10 +254,15 @@ a:active {
 
 .belowPostIcon {
     font-size: 30px;
+}
+
+.leaveThreadIcon {
     float:left;
+    font-size: 60px;
 }
 
 .avatarIcon {
     font-size: 70px;
 }
+
 

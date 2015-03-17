@@ -5,7 +5,7 @@
 
 {% block body %}
 
-    <a href="{{ path('show_category', {'id':thread.category.id}) }}"><i class="fa fa-arrow-circle-left belowPostIcon"></i></a>
+    <a href="{{ path('show_category', {'id':thread.category.id}) }}"><i class="fa fa-arrow-circle-left leaveThreadIcon"></i></a>
     <p class="clear"></p>
     <div id="category-display"> {{ thread.title }} </div>
     <div class="table">
@@ -28,7 +28,9 @@
                 <p></p>
                 {{ post.content|nl2br }}
                 <p></p>
+                <div class="light">
                 {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+                </div>
                 <div class="iconCell">
                     {% if app.security.getToken().getUser() == post.user %}
                         <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o belowPostIcon"></i></a>

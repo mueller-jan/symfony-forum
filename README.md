@@ -16,7 +16,7 @@ It is based on the Symfony Standard Edition.
     * admins can delete posts, threads and categories
 
 
-##Demo-Link (not the latest version)
+##Demo-Link
 Demo-Link: http://symfony-forum.jan-mueller.org/web/app_dev.php/secured/show-categories
 
 ##Installation
