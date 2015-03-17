@@ -52,6 +52,10 @@ class AccountController extends Controller
         if ($form->isValid()) {
             $registration = $form->getData();
             $user = $registration->getUser();
+            $plainPassword = $user->getPassword();
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $plainPassword);
+            $user->setPassword($encoded);
             /**
              * @todo implement proper way to assign roles
              */
