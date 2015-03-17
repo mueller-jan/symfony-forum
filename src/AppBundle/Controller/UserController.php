@@ -7,12 +7,14 @@ use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
 use AppBundle\Form\Type\ThreadFormType;
 use AppBundle\Form\Type\PostFormType;
+use AppBundle\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Date;
+
 
 
 
@@ -71,25 +73,12 @@ class UserController extends BaseController
             ->getManager();
         $category = $em->getRepository('AppBundle:Category')
             ->find($id);
-        $threads = $this->getThreadsOrderedByLatestPost($id);
+
         if (!$category) {
             throw $this->createNotFoundException('No thread found for id '.$id);
         }
+        $threads = $this->getDoctrine()->getRepository('AppBundle:Thread')->findAllOrderedByLastModifiedDate($id);
         return $this->render('default/show-threads.html.twig', array('threads' => $threads, 'category' => $category));
-    }
-
-    private function getThreadsOrderedByLatestPost($category_id)
-    {
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Thread');
-
-        $query = $repository->createQueryBuilder('t')
-            ->where("t.category = :id")
-            ->setParameter('id', $category_id)
-            ->orderBy('t.last_modified_date', 'desc')
-            ->getQuery();
-
-        return $query->getResult();
     }
 
     /**

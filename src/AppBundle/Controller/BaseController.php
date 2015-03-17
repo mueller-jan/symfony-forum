@@ -41,6 +41,6 @@ class BaseController extends Controller {
                 return new Response('Validierungs-Fehler!', Response::HTTP_BAD_REQUEST);
             }
         }
-        return $this->render('default/'.$className.'-'.$actionType.'.html.twig', ['form' => $form->createView()]);
+        return $this->render('default/'.$lowerClassName.'-'.$actionType.'.html.twig', ['form' => $form->createView()]);
     }
 }

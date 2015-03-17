@@ -12,8 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
  * @ORM\Table(name="thread")
+ *
  */
 class Thread {
 
