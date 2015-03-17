@@ -13,17 +13,24 @@
         <div class="heading-cell">
             <p>Description</p>
         </div>
+        <div class="heading-cell">
+            <p>Admin</p>
+        </div>
 
     </div>
     {% for category in categories %}
         <div class="row">
             <div class="cell">
                 <i class="fa fa-comments threadIcon"></i>
-                <a href="{{  path('show_category', {'id':category.id}) }}">{{category.name }}</a>
+                <a href="{{  path('show_category', {'id':category.id}) }}">{{ category.name }}</a>
             </div>
-
             <div class="cell">
                 {{ category.description }}
+            </div>
+            <div class="cell">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('delete_category', {'id':category.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

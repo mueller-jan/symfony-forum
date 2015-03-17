@@ -11,11 +11,6 @@
          <form action="{{ path('show_categories') }}">
              <button type="submit"  class="navButton" >Categories</button>
          </form>
-         {% if app.session.get('isInThread') %}
-             <form action="{{ path('show_category', {'id':app.session.get('category_id')}) }}">
-                 <button type="submit" class="navButton">Threads</button>
-             </form>
-         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}
             <form  action="{{ path('admin_panel') }}">

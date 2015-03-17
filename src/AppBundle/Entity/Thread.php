@@ -24,7 +24,7 @@ class Thread {
     protected $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="thread")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="thread", cascade={"persist", "remove"})
      */
     protected $posts;
 

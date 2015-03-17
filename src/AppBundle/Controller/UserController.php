@@ -67,7 +67,6 @@ class UserController extends BaseController
     {
         $request->getSession()->set('isInThread', false);
         //store current category that the user is browsing in session variable
-        $request->getSession()->set('category_id', $id);
         $em = $this->getDoctrine()
             ->getManager();
         $category = $em->getRepository('AppBundle:Category')

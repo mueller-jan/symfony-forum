@@ -4,6 +4,8 @@
 
 
 {% block body %}
+    <a href="{{ path('show_category', {'id':thread.category.id}) }}"><i class="fa fa-arrow-circle-left belowPostIcon"></i></a>
+    <p class="clear"></p>
     <div id="category-display"> {{ thread.title }} </div>
     <div class="table">
         <div class="row">
@@ -15,21 +17,21 @@
     {% for post in posts %}
         <div class="row">
             <div class="post-cell">
-                {{ post.title }} {{ post.id }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="post-cell">
+                ID: {{ post.id }}
+                <p></p>
+                {{ post.title }}
+                <p></p>
                 {{ post.content|nl2br }}
-                <br> {{ post.user.username }}, {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+                <p></p>
+                by {{ post.user.username }}, {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
                 <div class="iconCell">
                     {% if app.security.getToken().getUser() == post.user %}
-                        <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o belowPostIcon"></i></a>
                     {% endif %}
                 </div>
                 <div class="iconCell">
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('delete_post', {'id':post.id}) }}"><i class="fa fa-trash"></i></a>
+                        <a href="{{ path('delete_post', {'id':post.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
                     {% endif %}
                 </div>
             </div>

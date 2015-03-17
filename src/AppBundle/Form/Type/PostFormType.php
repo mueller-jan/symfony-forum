@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class PostFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('title', 'text')
+            ->add('title', 'text', array('required' => false))
             ->add('content', 'textarea', array(
                 'attr' => array('cols' => '80', 'rows' => '10'),))
             //->add('date', 'date')

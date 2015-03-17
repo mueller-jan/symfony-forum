@@ -12,10 +12,11 @@ It is based on the Symfony Standard Edition.
     * the user-role is by default 'ROLE_USER'
     * to create a user with the user-role 'ROLE_ADMIN' register with the username 'admin'
     * admins may access the admin-panel
-    * admins can delete posts
+    * admins can create categories
+    * admins can delete posts, threads and categories
 
 
-##Demo-Link
+##Demo-Link (not the latest version)
 Demo-Link: http://symfony-forum.jan-mueller.org/web/app_dev.php/secured/show-categories
 
 ##Installation

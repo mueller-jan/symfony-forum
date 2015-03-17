@@ -56,4 +56,47 @@ class AdminController extends Controller{
         return $this->redirect($this->generateUrl('show_thread', array('id' => $threadId)));
     }
 
+    /**
+     * Deletes a Thread entity.
+     *
+     * @Route("/secured/admin/delete-thread/{id}", name="delete_thread")
+     */
+    public function deleteThreadAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $thread = $em->getRepository('AppBundle:Thread')->find($id);
+
+
+        if (!$thread) {
+            throw $this->createNotFoundException('Unable to find Thread entity.');
+        }
+
+        $em->remove($thread);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('show_category', array('id' => $thread->getCategory()->getId())));
+    }
+
+    /**
+     * Deletes a Thread entity.
+     *
+     * @Route("/secured/admin/delete-category/{id}", name="delete_category")
+     */
+    public function deleteCategoryAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $category = $em->getRepository('AppBundle:Category')->find($id);
+
+
+        if (!$category) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        $em->remove($category);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('show_categories'));
+    }
+
+
 }

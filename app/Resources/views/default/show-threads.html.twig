@@ -24,6 +24,9 @@
         <div class="heading-cell">
             Latest Activity
         </div>
+        <div class="heading-cell">
+           Admin
+        </div>
     </div>
     {% for thread in threads %}
         <div class="row">
@@ -41,6 +44,13 @@
             <div class="cell">
                 {{ thread.lastModifiedDate|date("F jS \\a\\t g:ia")}}
             </div>
+            <div class="cell">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('delete_thread', {'id':thread.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
+                {% endif %}
+            </div>
+
+
         </div>
     {% endfor %}
 {% endblock %}

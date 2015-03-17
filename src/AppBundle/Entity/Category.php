@@ -24,7 +24,7 @@ class Category {
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Thread", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Thread", mappedBy="category", cascade={"remove"})
      */
     protected $threads;
 

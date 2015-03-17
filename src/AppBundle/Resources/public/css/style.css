@@ -29,6 +29,7 @@ li{
     margin:0;
     display: inline;
 }
+
 .required_notification {
     color:#d45252;
     margin:5px 0 0 0;
@@ -216,10 +217,12 @@ p.clear {
 /* === Link styles === */
 a:link {
     text-decoration: none;
+    color:#a40009;
 }
 
 a:visited {
     text-decoration: none;
+    color:#a40009;
 }
 
 a:hover {
@@ -241,5 +244,10 @@ a:active {
 
 .threadIcon {
     font-size: 30px;
+}
+
+.belowPostIcon {
+    font-size: 30px;
+    float:left;
 }
 
