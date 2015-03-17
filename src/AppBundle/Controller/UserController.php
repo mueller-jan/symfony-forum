@@ -67,7 +67,6 @@ class UserController extends BaseController
      */
     public function showCategoryAction(Request $request, $id)
     {
-        $request->getSession()->set('isInThread', false);
         //store current category that the user is browsing in session variable
         $em = $this->getDoctrine()
             ->getManager();
@@ -86,7 +85,6 @@ class UserController extends BaseController
      */
     public function showThreadAction(Request $request, $id)
     {
-        $request->getSession()->set('isInThread', true);
         $em = $this->getDoctrine()
             ->getManager();
         $thread = $em->getRepository('AppBundle:Thread')

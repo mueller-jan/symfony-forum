@@ -10,11 +10,8 @@
     <div id="category-display"> {{ thread.title }} </div>
     <div class="table">
         <div class="row">
-            <div class="post-cell">
-                {{ thread.user.username }}
-                <br>
-                <i class="fa fa-user avatarIcon"></i>
-            </div>
+            {% set user = thread.user %}
+            {% include ':default:profile-view.html.twig' %}
             <div class="post-cell">
                 <p>{{ thread.description }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
             </div>
@@ -22,11 +19,8 @@
         <p></p>
     {% for post in posts %}
         <div class="row">
-            <div class="post-cell">
-                <i class="fa fa-user avatarIcon"></i>
-                <br>
-                {{ post.user.username }}
-            </div>
+            {% set user = post.user %}
+            {% include ':default:profile-view.html.twig' %}
             <div class="post-cell">
                 ID: {{ post.id }}
                 <p></p>
