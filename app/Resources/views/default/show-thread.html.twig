@@ -4,18 +4,29 @@
 
 
 {% block body %}
+
     <a href="{{ path('show_category', {'id':thread.category.id}) }}"><i class="fa fa-arrow-circle-left belowPostIcon"></i></a>
     <p class="clear"></p>
     <div id="category-display"> {{ thread.title }} </div>
     <div class="table">
         <div class="row">
             <div class="post-cell">
-                <p>{{ thread.description }} <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
+                {{ thread.user.username }}
+                <br>
+                <i class="fa fa-user avatarIcon"></i>
+            </div>
+            <div class="post-cell">
+                <p>{{ thread.description }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
             </div>
         </div>
         <p></p>
     {% for post in posts %}
         <div class="row">
+            <div class="post-cell">
+                {{ post.user.username }}
+                <br>
+                <i class="fa fa-user avatarIcon"></i>
+            </div>
             <div class="post-cell">
                 ID: {{ post.id }}
                 <p></p>
@@ -23,7 +34,7 @@
                 <p></p>
                 {{ post.content|nl2br }}
                 <p></p>
-                by {{ post.user.username }}, {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+                {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
                 <div class="iconCell">
                     {% if app.security.getToken().getUser() == post.user %}
                         <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o belowPostIcon"></i></a>
@@ -34,6 +45,7 @@
                         <a href="{{ path('delete_post', {'id':post.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
                     {% endif %}
                 </div>
+
             </div>
         </div>
         <p></p>
