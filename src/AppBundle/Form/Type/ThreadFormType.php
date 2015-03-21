@@ -6,13 +6,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
+/**
+ * Class ThreadFormType
+ *
+ * form for thread creation
+ *
+ * @package AppBundle\Form\Type
+ */
 class ThreadFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
         $builder
-            ->add('title', 'text')
-            ->add('description', 'textarea')
-            //->add('date', 'hidden')
-            ->add('save', 'submit', array('label' => 'Create Thread'))
+            ->add('title', 'text',  array('label' => 'Thread title'))
+            ->add('description', 'textarea', array('label' => 'Thread description'))
             ->getForm();
     }
 
@@ -21,14 +28,9 @@ class ThreadFormType extends AbstractType {
         return 'thread';
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-            'data_class'         => Thread::class,
-            'action'        => '',
-        ]);
+        $resolver->setDefaults(array('data_class' => 'AppBundle\Entity\Thread'));
     }
+
 }

@@ -5,10 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
+use AppBundle\Form\Type\ThreadCreationFormType;
 use AppBundle\Form\Type\ThreadFormType;
 use AppBundle\Form\Type\PostFormType;
+use AppBundle\Model\ThreadCreation;
 use AppBundle\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,11 +23,12 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class UserController extends BaseController
 {
+
+
     /**
-     * @Route("/index", name="index")
+     * @Route("/show", name="show")
      */
-    public function indexAction()
-    {
+    public function showAction() {
         return $this->render('default/index.html.twig');
     }
 
@@ -41,12 +45,31 @@ class UserController extends BaseController
         $thread->setLastModifiedDate(new \DateTime("now"));
         $thread->setViews(0);
         $thread->setUser($user);
-        $thread -> setCategory($category);
+        $thread->setCategory($category);
 
-        $actionURL = $this->generateUrl('create_new_thread', ['id'=>$category->getId()]);
-        $callback  = array($this, 'showCategoryAction');
-        $callbackArguments = array($request, $category->getId());
-        return $this->renderForm($request, $thread, 'new', $callback, $callbackArguments, ['action' => $actionURL]);
+        $post = new Post();
+        $post->setDate(new \DateTime("now"));
+        $post->setThread($thread);
+        $thread->setLastModifiedDate(new \DateTime("now"));
+        $post->setUser($user);
+
+        $threadCreation = new ThreadCreation();
+        $threadCreation->setThread($thread);
+        $threadCreation->setPost($post);
+
+        $form = $this->createForm(new ThreadCreationFormType(), $threadCreation);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($thread);
+            $em->persist($post);
+            $em->flush();
+            return $this->redirect($this->generateUrl('show_thread', array('id' => $thread->getId())));
+        }
+
+        return $this->render('default/thread-new.html.twig', array('form' => $form->createView()));
+
     }
 
     /**

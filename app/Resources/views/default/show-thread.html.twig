@@ -10,9 +10,7 @@
     <div id="category-display"> {{ thread.title }} </div>
     <div class="table">
         <div class="row">
-            {% set user = thread.user %}
-            {% include ':default:profile-view.html.twig' %}
-            <div class="post-cell">
+            <div class="description-cell">
                 <p>{{ thread.description }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
             </div>
         </div>

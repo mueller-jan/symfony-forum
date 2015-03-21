@@ -210,6 +210,18 @@ p.clear {
     background-color: #eeebdf;
 }
 
+.description-cell
+{
+    display: table-cell;
+    padding: 20px;
+    text-align: left;
+    color:#000000;
+    vertical-align: middle;
+    background-color: #eeebdf;
+    width:10%;
+}
+
+
 .iconCell
 {
     float:left;

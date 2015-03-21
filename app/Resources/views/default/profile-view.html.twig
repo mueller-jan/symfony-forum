@@ -3,5 +3,5 @@
     <p></p>
     Name: {{ user.username }}
     <p></p>
-    Posts: {{ user.posts|length }}
+    Posts: {{ user.posts|length + user.threads|length}}
 </div>

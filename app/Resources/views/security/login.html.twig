@@ -8,7 +8,6 @@
             <div>{{ error.messageKey|trans(error.messageData) }}</div>
         {% endif %}
         <form action="{{ path('login_check') }}" method="post">
-            <input type="hidden" name="{{ path('show_categories') }}" value="account" />
             <ul>
                 <li>
                     <label for="username">Username:</label>

@@ -12,6 +12,10 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class RegistrationType
+ * @package AppBundle\Form\Type
+ */
 
 class RegistrationType extends AbstractType
 {

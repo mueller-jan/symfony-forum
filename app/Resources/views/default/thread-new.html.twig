@@ -3,28 +3,46 @@
 {% block title %}Thread{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_errors(form) }}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="table">
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.thread.title) }}
+            </div>
+            <div class="cell">
+                {{ form(form.thread.title) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.thread.description) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.thread.description) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.post.title) }}
+            </div>
+            <div class="cell">
+                {{ form(form.post.title) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.post.content) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.post.content) }}
+            </div>
+        </div>
+        {{ form_row(form._token) }}
+        <div id="button">
+            {{ form_widget(form.button) }}
+        </div>
+    </div>
 
-<div class="table">
-    <div class="row">
-        <div class="cell">
-            {{ form_label(form.title) }}
-        </div>
-        <div class="cell">
-            {{ form(form.title) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="cell">
-            {{ form_label(form.description) }}
-        </div>
-        <div class="cell">
-            {{ form_widget(form.description) }}
-        </div>
-    </div>
-    {{ form_row(form._token) }}
-    {{ form_widget(form.save) }}
-</div>
-{{ form_end(form) }}
+    {{ form_end(form) }}
 {% endblock %}
