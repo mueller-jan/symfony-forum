@@ -7,8 +7,6 @@
     <form action="{{  path('create_new_thread', {'id': category.id}) }}">
         <button type="submit" id="create-thread-button">Create Thread</button>
     </form>
-
-
     <p class="clear"></p>
     <div id="category-display">{{ category.name }} </div>
     <div class="table">
@@ -32,7 +30,7 @@
                 <div class="iconCell">
                     <i class="fa fa-comments threadIcon"></i>
                 </div>
-                <a href="{{  path('show_thread', {'id':thread.id}) }}" class="tooltip">{{ thread.title }}</a>
+                <a href="{{  path('show_thread', {'id':thread.id}) }}" title="{{ thread.description }}">{{ thread.title }}</a>
                 <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia") }}</br>
             </div>
             <div class="cell">
@@ -50,8 +48,11 @@
         </div>
     {% endfor %}
         {% block javascripts %}
-            <script type="text/javascript" src="/js/jquery.1.3.2.min.js"></script>
-            <script type="text/javascript" src="/js/jquery.qtip-1.0.0.min.js"></script>
+            <script type="text/javascript">
+                $(function() {
+                    $( document ).tooltip();
+                });
+            </script>
         {% endblock %}
 
 {% endblock %}
