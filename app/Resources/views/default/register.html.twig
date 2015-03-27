@@ -41,13 +41,29 @@
         </div>
         <div class="row">
             <div class="cell">
+                {{ form_label(form.user.birthday) }}
+            </div>
+            <div class="cell">
+                {{ form_widget(form.user.birthday) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">
                 {{ form_widget(form.terms) }}
             </div>
         </div>
+
         {{ form_row(form._token) }}
         <div id="register-button">
          {{ form_widget(form.Register) }}
         </div>
     </div>
     {{ form_end(form) }}
+    {% block javascripts %}
+        <script>
+            $(function() {
+                $( "#registration_user_birthday" ).datepicker();
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

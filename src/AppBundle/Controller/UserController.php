@@ -90,7 +90,6 @@ class UserController extends BaseController
      */
     public function showCategoryAction(Request $request, $id)
     {
-        //store current category that the user is browsing in session variable
         $em = $this->getDoctrine()
             ->getManager();
         $category = $em->getRepository('AppBundle:Category')

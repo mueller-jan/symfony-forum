@@ -23,6 +23,11 @@ class UserType extends AbstractType
             'second_name' => 'confirm',
             'type' => 'password',
         ));
+        $builder->add('birthday','date',array(
+            'widget' => 'single_text',
+            'format' => 'dd-MM-yyyy',
+            'attr' => array('class' => 'date')
+        ));
     }
 
 

@@ -65,6 +65,8 @@ class User implements UserInterface, \Serializable
         return $this->posts;
     }
 
+
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -97,6 +99,11 @@ class User implements UserInterface, \Serializable
      *
      */
     protected $roles;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $birthday;
 
     public function getId()
     {
@@ -259,4 +266,27 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+
+    /**
+     * Set birthday
+     *
+     * @param \DateTime $birthday
+     * @return User
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * Get birthday
+     *
+     * @return \DateTime 
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
 }
