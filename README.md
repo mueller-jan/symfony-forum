@@ -8,6 +8,7 @@ It is based on the Symfony Standard Edition.
 * creating threads
 * creating posts in threads
 * users can edit their own posts
+* pagination for threads and posts (KnpPaginatorBundle)
 * different roles
     * the user-role is by default 'ROLE_USER'
     * to create a user with the user-role 'ROLE_ADMIN' register with the username 'admin'

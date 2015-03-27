@@ -99,8 +99,14 @@ class UserController extends BaseController
         if (!$category) {
             throw $this->createNotFoundException('No thread found for id '.$id);
         }
-        $threads = $this->getDoctrine()->getRepository('AppBundle:Thread')->findAllOrderedByLastModifiedDate($id);
-        return $this->render('default/show-threads.html.twig', array('threads' => $threads, 'category' => $category));
+        $query = $this->getDoctrine()->getRepository('AppBundle:Thread')->findAllOrderedByLastModifiedDate($id);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        return $this->render('default/show-threads.html.twig', array('pagination' => $pagination, 'category' => $category));
     }
 
     /**
@@ -108,6 +114,7 @@ class UserController extends BaseController
      */
     public function showThreadAction(Request $request, $id)
     {
+
         $em = $this->getDoctrine()
             ->getManager();
         $thread = $em->getRepository('AppBundle:Thread')
@@ -116,19 +123,28 @@ class UserController extends BaseController
         $thread->setViews($thread->getViews()+1);
         $em->persist($thread);
         $em->flush();
-        //get all posts from current thread
-        $posts = $thread->getPosts();
         $postSubmitForm = $this->createPostSubmitForm($request, $thread);
+        //get all posts from current thread
+        //$posts = $thread->getPosts()->;
+        $query = $this->getDoctrine()->getRepository('AppBundle:Thread')->findAllPostsOrderedById($id);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
 
         if (!$thread) {
             throw $this->createNotFoundException('No product found for id '.$id);
         }
-        return $this->render('default/show-thread.html.twig', array('posts' => $posts, 'thread' => $thread, 'form' => $postSubmitForm->createView()));
+        return $this->render('default/show-thread.html.twig', array('pagination' => $pagination, 'thread' => $thread, 'form' => $postSubmitForm->createView()));
     }
 
     private function createPostSubmitForm(Request $request, $thread) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $post = new Post();
+        $post->setContent("");
         $post->setDate(new \DateTime("now"));
         $form = $this->createForm(new PostFormType(), $post);
         $post->setThread($thread);
@@ -168,5 +184,7 @@ class UserController extends BaseController
             return new Response('Missing Permission', Response:: HTTP_FORBIDDEN);
         }
     }
+
+
 
 }

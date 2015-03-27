@@ -24,36 +24,40 @@
            Admin
         </div>
     </div>
-    {% for thread in threads %}
+    {% for article in pagination %}
         <div class="row">
             <div class="cell">
                 <div class="iconCell">
                     <i class="fa fa-comments threadIcon"></i>
                 </div>
-                <a href="{{  path('show_thread', {'id':thread.id}) }}" title="{{ thread.description }}">{{ thread.title }}</a>
-                <br> {{ thread.user.username }}, {{ thread.creationDate|date("F jS \\a\\t g:ia") }}</br>
+                <a href="{{  path('show_thread', {'id':article.id}) }}" title="{{ article.description }}">{{ article.title }}</a>
+                <br> {{ article.user.username }}, {{ article.creationDate|date("F jS \\a\\t g:ia") }}</br>
             </div>
             <div class="cell">
-                {{ thread.posts|length }}
-                <br>{{ thread.views }}
+                {{ article.posts|length }}
+                <br>{{ article.views }}
             </div>
             <div class="cell">
-                {{ thread.lastModifiedDate|date("F jS \\a\\t g:ia")}}
+                {{ article.lastModifiedDate|date("F jS \\a\\t g:ia")}}
             </div>
             <div class="cell">
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('delete_thread', {'id':thread.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
+                    <a href="{{ path('delete_thread', {'id':article.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
                 {% endif %}
             </div>
         </div>
     {% endfor %}
-        {% block javascripts %}
-            <script type="text/javascript">
-                $(function() {
-                    $( document ).tooltip();
-                });
-            </script>
-        {% endblock %}
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {% block javascripts %}
+        <script type="text/javascript">
+            $(function() {
+                $( document ).tooltip();
+            });
+        </script>
+    {% endblock %}
 
 {% endblock %}
 

@@ -21,7 +21,18 @@ class ThreadRepository extends EntityRepository
             ->setParameter('id', $category_id)
             ->orderBy('t.last_modified_date', 'desc')
             ->getQuery();
+        return $query;
+    }
 
-        return $query->getResult();
+    public function findAllPostsOrderedById($thread_id)
+    {
+        $repository = $this->getEntityManager()
+            ->getRepository('AppBundle:Post');
+
+        $query = $repository->createQueryBuilder('p')
+            ->where("p.thread = :id")
+            ->setParameter('id', $thread_id)
+            ->getQuery();
+        return $query;
     }
 }

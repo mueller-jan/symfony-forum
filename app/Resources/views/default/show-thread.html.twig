@@ -11,32 +11,36 @@
     <div class="table">
         <div class="row">
             <div class="description-cell">
-                <p>{{ thread.description }}, {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}</p>
+                <p>{{ thread.description }}</p>
+            </div>
+            <div class="post-cell">
+                {{ thread.creationDate|date("F jS \\a\\t g:ia")  }}
             </div>
         </div>
+
         <p></p>
-    {% for post in posts %}
+    {% for article in pagination %}
         <div class="row">
-            {% set user = post.user %}
+            {% set user = article.user %}
             {% include ':default:profile-view.html.twig' %}
             <div class="post-cell">
-                ID: {{ post.id }}
+                ID: {{ article.id }}
                 <p></p>
-                {{ post.title }}
+                {{ article.title }}
                 <p></p>
-                {{ post.content|nl2br }}
+                {{ article.content|nl2br }}
                 <p></p>
                 <div class="light">
-                {{ post.date|date("F jS \\a\\t g:ia") }}  </br>
+                {{ article.date|date("F jS \\a\\t g:ia") }}  </br>
                 </div>
                 <div class="iconCell">
-                    {% if app.security.getToken().getUser() == post.user %}
-                        <a href="{{ path('edit_post', {'id':post.id}) }}"><i class="fa fa-pencil-square-o belowPostIcon"></i></a>
+                    {% if app.security.getToken().getUser() == article.user %}
+                        <a href="{{ path('edit_post', {'id':article.id}) }}"><i class="fa fa-pencil-square-o belowPostIcon"></i></a>
                     {% endif %}
                 </div>
                 <div class="iconCell">
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('delete_post', {'id':post.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
+                        <a href="{{ path('delete_post', {'id':article.id}) }}"><i class="fa fa-trash belowPostIcon"></i></a>
                     {% endif %}
                 </div>
 
@@ -45,6 +49,10 @@
         <p></p>
 
 {% endfor %}
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     <p></p>
     {% include ':default:post-new.html.twig' %}

@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="name already taken")
  */
 class User implements UserInterface, \Serializable
 {
