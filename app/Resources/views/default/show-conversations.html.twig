@@ -1,0 +1,23 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block title %}Conversations{% endblock %}
+
+{% block body %}
+    <p class="clear"></p>
+    <div class="table">
+    <div class="heading">
+        <div class="heading-cell">
+            Private Messages
+        </div>
+    </div>
+    {% for conversation in conversations %}
+        <div class="row">
+            <div class="cell">
+                <div class="iconCell">
+                    <i class="fa fa-comments threadIcon"></i>
+                </div>
+                <a href="{{  path('show_conversation', {'id':conversation.id}) }}">conversation with {{app.security.getToken().getUser().getUsername() == conversation.userOne.username ? conversation.userTwo.username : conversation.userOne.username}}</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

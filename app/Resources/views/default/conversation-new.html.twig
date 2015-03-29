@@ -1,23 +1,27 @@
-{{ form_start(form) }}
+{% extends 'loggedin.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
     {{ form_errors(form) }}
     <div class="table">
         <div class="row">
             <div class="cell">
-                {{ form_label(form.title) }}
+                Send Message to:
             </div>
             <div class="cell">
-                {{ form(form.title) }}
+                {{ receivingUser.username }}
             </div>
         </div>
         <div class="row">
             <div class="cell">
-                {{ form_label(form.content) }}
+                {{ form_label(form.reply) }}
             </div>
             <div class="cell">
-                {{ form_widget(form.content) }}
+                {{ form(form.reply) }}
             </div>
         </div>
         {{ form_row(form._token) }}
-            {{ form_widget(form.save) }}
+        {{ form_widget(form.save) }}
     </div>
-{{ form_end(form) }}
+    {{ form_end(form) }}
+{% endblock %}

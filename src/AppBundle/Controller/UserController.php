@@ -3,8 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\ConversationReply;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
+use AppBundle\Entity\Conversation;
+use AppBundle\Form\Type\ConversationFormType;
+use AppBundle\Form\Type\MessageFormType;
 use AppBundle\Form\Type\ThreadCreationFormType;
 use AppBundle\Form\Type\ThreadFormType;
 use AppBundle\Form\Type\PostFormType;
@@ -69,7 +73,6 @@ class UserController extends BaseController
         }
 
         return $this->render('default/thread-new.html.twig', array('form' => $form->createView()));
-
     }
 
     /**
@@ -113,7 +116,6 @@ class UserController extends BaseController
      */
     public function showThreadAction(Request $request, $id)
     {
-
         $em = $this->getDoctrine()
             ->getManager();
         $thread = $em->getRepository('AppBundle:Thread')
@@ -132,7 +134,6 @@ class UserController extends BaseController
             $request->query->get('page', 1)/*page number*/,
             10/*limit per page*/
         );
-
 
         if (!$thread) {
             throw $this->createNotFoundException('No product found for id '.$id);
@@ -162,7 +163,6 @@ class UserController extends BaseController
 
     /**
      * @Route("/secured/edit-post/{id}", name="edit_post")
-     * @ParamConverter("post", class="AppBundle:Post")
      */
     public function editPostAction(Request $request, Post $post)
     {
@@ -184,6 +184,78 @@ class UserController extends BaseController
         }
     }
 
+
+    /**
+     * @Route("/secured/create-conversation/{id}", name="create_conversation")
+     * @ParamConverter("user", class="AppBundle:User")
+     */
+
+    public function createConversationAction(Request $request, $id)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()
+            ->getManager();
+        $receivingUser = $em->getRepository('AppBundle:User')
+            ->find($id);
+        $conversation = new Conversation();
+        $conversation->setUserOne($user);
+        $conversation->setUserTwo($receivingUser);
+
+        $conversationReply = new ConversationReply();
+        $conversationReply->setConversation($conversation);
+        $conversationReply->setUser($user);
+
+        $form = $this->createForm(new ConversationFormType(), $conversationReply);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($conversation);
+            $em->persist($conversationReply);
+            $em->flush();
+            return $this->redirect($this->generateUrl('show_categories'));
+        }
+        return $this->render('default/conversation-new.html.twig', array('form' => $form->createView(), 'receivingUser' => $receivingUser) );
+    }
+
+    /**
+     * @Route("/secured/show-conversations", name="show_conversations")
+     */
+    public function showConversationsAction(Request $request)
+    {
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $conversations = $this->getDoctrine()->getRepository('AppBundle:Conversation')->findAllByUserId($userId);
+
+        return $this->render('default/show-conversations.html.twig', array('conversations' => $conversations));
+    }
+
+    /**
+     * @Route("/secured/show-conversation/{id}", name="show_conversation")
+     * @ParamConverter("conversation", class="AppBundle:Conversation")
+     */
+    public function showConversationAction(Request $request, $conversation)
+    {
+        $user= $this->get('security.token_storage')->getToken()->getUser();
+        if (($user == $conversation->getUserOne()) || ($user == $conversation->getUserTwo())) {
+            $conversationReply = new ConversationReply();
+            $conversationReply->setConversation($conversation);
+            $conversationReply->setUser($user);
+
+            $form = $this->createForm(new ConversationFormType(), $conversationReply);
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($conversation);
+                $em->persist($conversationReply);
+                $em->flush();
+                return $this->redirect($this->generateUrl('show_conversation', array('id' => $conversation->getId())));
+            }
+            return $this->render('default/show-conversation.html.twig', array('conversation' => $conversation->getConversationReplies(), 'form' => $form->createView(),));
+        } else {
+            return new Response('Missing Permission', Response:: HTTP_FORBIDDEN);
+        }
+    }
 
 
 }

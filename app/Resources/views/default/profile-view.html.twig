@@ -4,4 +4,6 @@
     Name: {{ user.username }}
     <p></p>
     Posts: {{ user.posts|length + user.threads|length}}
+    <p></p>
+    <a href=" {{ path('create_conversation', {'id':user.id}) }}">Send Message</a>
 </div>

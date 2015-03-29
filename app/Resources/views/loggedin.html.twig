@@ -3,6 +3,8 @@
 
 {% block navigation %}
     <div id="navigation">
+        <a href=" {{ path('show_conversations') }}"><i class="fa fa-envelope messageIcon"></i></a>
+        <p class="clear"></p>
         Welcome {{ app.security.getToken().getUser().username }}!
         ({{ app.security.getToken().getUser().getRoles()|first.getName() }})
         <form action="{{  path('logout') }}">
@@ -11,13 +13,13 @@
          <form action="{{ path('show_categories') }}">
              <button type="submit"  class="navButton" >Categories</button>
          </form>
-
         {% if is_granted('ROLE_ADMIN') %}
             <form  action="{{ path('admin_panel') }}">
                 <button id="admin-button" type="submit">Admin Panel</button>
             </form>
         {% endif %}
-         <p class="clear"></p>
+        <p class="clear"></p>
+
     </div>
  {% endblock %}
 

@@ -1,0 +1,45 @@
+{% extends 'loggedin.html.twig' %}
+
+{% block title %}Conversation{% endblock %}
+
+
+{% block body %}
+    <p class="clear"></p>
+    <div class="table">
+    <div class="heading">
+        <div class="heading-cell">
+            Message
+        </div>
+        <div class="heading-cell">
+            User
+        </div>
+    </div>
+    {% for conversationReply in conversation %}
+        <div class="row">
+            <div class="cell">
+                {{ conversationReply.reply }}
+            </div>
+            <div class="cell">
+                {{ conversationReply.user.username}}
+            </div>
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div class="table">
+        <div class="row">
+            <div class="cell">
+                {{ form_label(form.reply) }}
+            </div>
+            <div class="cell">
+                {{ form(form.reply) }}
+            </div>
+        </div>
+        {{ form_row(form._token) }}
+        {{ form_widget(form.save) }}
+    </div>
+    {{ form_end(form) }}
+
+
+{% endblock %}

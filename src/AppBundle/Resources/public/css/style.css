@@ -274,6 +274,11 @@ a:active {
     font-size: 60px;
 }
 
+.messageIcon {
+    float:right;
+    font-size: 30px;
+}
+
 .avatarIcon {
     font-size: 70px;
 }

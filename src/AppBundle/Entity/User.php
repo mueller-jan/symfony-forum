@@ -20,10 +20,12 @@ class User implements UserInterface, \Serializable
      */
     protected $posts;
 
+
     /**
      * @ORM\OneToMany(targetEntity="Thread", mappedBy="user")
      */
     protected $threads;
+
 
     public function __construct()
     {
@@ -64,7 +66,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->posts;
     }
-
 
 
     /**
@@ -158,7 +159,6 @@ class User implements UserInterface, \Serializable
     }
 
 
-
     public function getRoles()
     {
         return $this->roles->toArray();;
@@ -177,13 +177,15 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
+        return serialize(
+            array(
+                $this->id,
+                $this->username,
+                $this->password,
+                // see section on salt below
+                // $this->salt,
+            )
+        );
     }
 
     /**
@@ -235,8 +237,6 @@ class User implements UserInterface, \Serializable
     }
 
 
-
-
     /**
      * Add roles
      *
@@ -263,6 +263,7 @@ class User implements UserInterface, \Serializable
     public function setRoles($roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -283,7 +284,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get birthday
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthday()
     {
